@@ -518,7 +518,9 @@ fn main() -> opencv::Result<()> {
         // ── Mostrar en ventana única ──────────
         highgui::imshow(window, &result_frame)?;
 
-        let key = highgui::wait_key(1)?;
+        // Delay basado en FPS real del video para velocidad correcta
+        let delay = ((1000.0 / fps_orig) * args.skip as f64) as i32;
+        let key = highgui::wait_key(delay.max(1))?;
         if key == b'q' as i32 || key == 27 {
             println!("[INFO] Saliendo por solicitud del usuario.");
             break;
