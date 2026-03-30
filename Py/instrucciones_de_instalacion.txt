@@ -1,0 +1,31 @@
+Notas: Para utilizar el codigo necesita intalar lo siguiente
+
+# Dependencias del sistema
+sudo apt install python3-pip python3-opencv -y
+
+# Dependencias de Python
+pip3 install ultralytics scikit-learn yt-dlp --break-system-packages
+
+Es un problema de conexión lenta, el archivo es muy grande (530MB) y se cortó. Instalá por partes, de menor a mayor tamaño:
+
+bash# Primero los más livianos
+pip3 install yt-dlp --break-system-packages
+pip3 install scikit-learn --break-system-packages
+
+# Ultralytics con timeout extendido (es el más pesado)
+pip3 install ultralytics --break-system-packages --timeout 300Es un problema de conexión lenta, el archivo es muy grande (530MB) y se cortó. Instalá por partes, de menor a mayor tamaño:
+bash# Primero los más livianos
+pip3 install yt-dlp --break-system-packages
+pip3 install scikit-learn --break-system-packages
+
+# Ultralytics con timeout extendido (es el más pesado)
+pip3 install ultralytics --break-system-packages --timeout 300
+
+
+5:43 PM
+¡Casi listo! Solo falta instalar lap:
+
+bash
+pip install lap --break-system-packages
+
+pip install "numpy<2.0" --break-system-packages --force-reinstall
