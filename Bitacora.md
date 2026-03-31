@@ -112,3 +112,43 @@ proyecto_openCV/
     └── src/
         └── main.rs       ← Código fuente principal
 ```
+
+# Bitácora — Integración con Yocto Project
+
+## 30 de Marzo, 2026
+
+**9:00 PM — Configuración del entorno Yocto Kirkstone**
+
+Se inició el entorno de Yocto con la versión Kirkstone (4.0) previamente descargada y se verificó que el comando `bitbake` estuviera disponible.
+
+**10:00 PM — Creación de la capa personalizada**
+
+Se creó la capa `meta-colordetector` y se configuró la receta `colordetector_0.1.bb` para incluir el binario del proyecto. Se copiaron los archivos `main.rs` y `Cargo.toml` a la carpeta `files/` de la receta.
+
+**11:00 PM — Integración de meta-openembedded**
+
+Se clonó el repositorio `meta-openembedded` rama Kirkstone y se agregaron las capas `meta-oe`, `meta-python` y `meta-multimedia` para tener acceso a OpenCV dentro de la imagen.
+
+**12:00 AM — Primera compilación y errores**
+
+Se ejecutó `bitbake core-image-minimal` por primera vez. Se presentaron errores relacionados con la estructura del `Cargo.toml`, el `Cargo.lock` incompatible con la versión de Cargo de Yocto (1.59) y problemas con la búsqueda del crate `opencv` en crates.io sin acceso a internet.
+
+**1:00 AM — Diagnóstico de incompatibilidad de versiones**
+
+Se identificó que Yocto Kirkstone usa Cargo 1.59 mientras que el proyecto fue desarrollado con Cargo 1.94. El crate `opencv 0.93` no existía en la época de Cargo 1.59, por lo que la compilación era imposible en Kirkstone.
+
+**2:00 AM — Migración a Yocto Scarthgap (5.0)**
+
+Se descargó Poky Scarthgap y su correspondiente `meta-openembedded`. Se migró la capa `meta-colordetector` actualizando la compatibilidad a `scarthgap` y se configuró el `local.conf` con la arquitectura `qemux86-64`.
+
+**3:00 AM — Nuevo error en Scarthgap y pausa**
+
+Se inició la compilación con Scarthgap pero se presentó un error en `binutils 2.42` por incompatibilidad con el compilador del sistema en Pop!OS 24.04. Se dejó pendiente la resolución para el día siguiente.
+
+---
+
+## 31 de Marzo, 2026
+
+**Continuación — Resolución del error de binutils**
+
+Al retomar la sesión, se ejecutó `bitbake -c cleanall binutils` para limpiar la compilación anterior y se reinició el proceso de compilación de la imagen completa. La compilación continúa en proceso.
