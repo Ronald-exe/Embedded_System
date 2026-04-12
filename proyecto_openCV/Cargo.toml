@@ -4,5 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-opencv = { version = "0.93", features = ["videoio", "imgproc", "highgui"] }
+opencv = { version = "=0.93.7", features = ["videoio", "imgproc", "highgui"], default-features = false }
 
+[dependencies.wit-bindgen]
+version = "=0.36.0"
+optional = true
